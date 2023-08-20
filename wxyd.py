@@ -8,7 +8,7 @@ import random
 import re
 # 时间
 import time
-
+# 微信阅读
 # 入口: https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr5xiVUIwNQVvj1sADz2rb5Mg
 authtoken = '###'
 

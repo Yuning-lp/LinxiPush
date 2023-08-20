@@ -1,13 +1,15 @@
+# Author: lindaye
+# update: 2023-08-20 18:31
+# 充值购买阅读(钢镚阅读)
+# 入口: http://2496831.y1bn.0749apd1a845l.cloud/?p=2496831
+
 import re
 import time
 import hashlib
 import random
 import requests
 
-# 充值购买阅读(钢镚阅读)
-# 入口: http://2496831.y1bn.0749apd1a845l.cloud/?p=2496831
-
-# 获取 xwytoken 环境变量值
+# 抓包获取Cookie完全填入cookie替换###
 cookie = "###"
 headers = {
     "User-Agent": "Mozilla/5.0 (Linux; Android 9; V1923A Build/PQ3B.190801.06161913; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Safari/537.36 MMWEBID/5635 MicroMessenger/8.0.40.2420(0x28002837) WeChat/arm64 Weixin Android Tablet NetType/WIFI Language/zh_CN ABI/arm64",

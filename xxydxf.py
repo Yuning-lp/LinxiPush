@@ -1,16 +1,19 @@
 # Author: lindaye
-# 修复提现
+# 1.修复提现
+# 2.新增多账户
 
 import requests
 import re
 import time
 import random
 
-ysm_uid = '####'
+# 仅填写uid_list内容即可
+uid_list = ['##','##']
 
+ysm_uid = ''
 
 headers = {
-    'Cookie': f'ysm_uid={ysm_uid}',
+    'Cookie': '',
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue'
 }
 
@@ -110,10 +113,15 @@ def do_read(uk):
             break
    
 
-signid = signin()
-user_info()
-hasWechat()
-gold()
-get_Key()
-gold()
-get_money(signid)
+print(f"=================获取到{len(uid_list)}个账号==================")
+for id in range(len(uid_list)):
+    print(f"当前为第{id+1}个账号")
+    ysm_uid = uid_list[id]
+    headers['Cookie'] = f'ysm_uid={ysm_uid}'
+    signid = signin()
+    user_info()
+    hasWechat()
+    gold()
+    get_Key()
+    gold()
+    get_money(signid)

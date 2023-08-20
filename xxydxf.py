@@ -99,7 +99,7 @@ def do_read(uk):
             print (f'本次模拟读{s}秒')#line:141
             time.sleep(s)
             rurl = f'https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold?uk={uk}&time={s}&timestamp={ts()}'
-            r_result = requests.get(rurl,headers=headers).text
+            r_result = requests.get(rurl,headers=headers).json()
             if r_result['errcode'] == 0:
                 print(f"阅读已完成: 获得{r_result['data']['gold']}积分")
             else:

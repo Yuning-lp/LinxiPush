@@ -1,15 +1,15 @@
+# Author: lindaye
+# update: 2023-08-20 18:31
+# 从零开始阅读
+# 入口: https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr5xiVUIwNQVvj1sADz2rb5Mg
+
 import requests
-#加密
 from Crypto.Cipher import AES
 import base64
-# 随机值
 import random
-# 正则匹配
 import re
-# 时间
 import time
-# 微信阅读
-# 入口: https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr5xiVUIwNQVvj1sADz2rb5Mg
+# 抓包获取Cookie中的authtoken替换###
 authtoken = '###'
 
 headers = {

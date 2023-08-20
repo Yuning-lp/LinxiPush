@@ -1,4 +1,5 @@
 # Author: lindaye
+# update: 2023-08-20 18：31
 # 1.修复提现
 # 2.新增多账户
 # 小小阅读
@@ -9,7 +10,9 @@ import re
 import time
 import random
 
-# 仅填写uid_list内容即可
+# 仅填写uid_list内容即可(抓包获取Cookie中的ysm_uid的值填入##)
+# 单账号 uid_list = ['##']
+# 多账号 uid_list = ['##','##']
 uid_list = ['##','##']
 
 ysm_uid = ''

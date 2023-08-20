@@ -8,6 +8,7 @@ import random
 
 ysm_uid = '####'
 
+
 headers = {
     'Cookie': f'ysm_uid={ysm_uid}',
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue'

@@ -1,5 +1,5 @@
 # Author: lindaye
-# update: 2023-08-20 18:31
+# update: 2023-08-21 14:00
 # 1.修复提现
 # 2.新增多账户
 # 小小阅读
@@ -112,10 +112,13 @@ def do_read(uk):
             if r_result['errcode'] == 0:
                 print(f"阅读已完成: 获得{r_result['data']['gold']}积分")
             else:
-                print(f"阅读失败: {r_result}")
+                print(f"阅读失败: {r_result},重新获取阅读")
         else:
-            print (f"阅读提醒: {result['msg']}")
-            break
+            if result['msg'] == "任务重复":
+                print("阅读失败: 阅读重复重新获取文章")
+            else:
+                print (f"阅读提醒: {result['msg']}")
+                break
    
 
 print(f"=================获取到{len(uid_list)}个账号==================")

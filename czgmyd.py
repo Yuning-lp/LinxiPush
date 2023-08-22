@@ -1,7 +1,7 @@
 # Author: lindaye
 # update: 2023-08-23 6:40
 # 充值购买阅读(钢镚阅读)
-# 新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
+# 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
 # 入口: http://2496831.y1bn.0749apd1a845l.cloud/?p=2496831
 # V1.1
 

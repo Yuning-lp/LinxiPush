@@ -79,7 +79,10 @@ def read():
                         if response['code'] == 0:
                             if response['data']['check'] is False:
                                 gain = response['data']['gain']
-                                print(f"阅读文章成功---获得钢镚[{gain}]")
+                                print(f"(验证成功)阅读文章成功---获得钢镚[{gain}]")
+                        else:
+                            print(f"验证失败: {response}")
+                            break
                     else:
                         print(response)
                         break

@@ -3,8 +3,9 @@
 # 充值购买阅读(钢镚阅读)
 # 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
 # 2.升级推送助手(实时检测阅读回调)
+# 3.新增多账户
 # 入口: http://2496831.ikbiwrbnf.bmaw.t7267ekl7p.cloud/?p=2496831
-# V1.2(测试中)
+# V1.3(测试中)
 
 import re
 import time
@@ -19,10 +20,11 @@ tsurl = 'https://linxi-send.run.goorm.app'
 temp_user = ''
 
 # 抓包获取Cookie完全填入cookie替换###
-cookie = "###"
+cookie_list = ["##","##"]
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Linux; Android 9; V1923A Build/PQ3B.190801.06161913; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Safari/537.36 MMWEBID/5635 MicroMessenger/8.0.40.2420(0x28002837) WeChat/arm64 Weixin Android Tablet NetType/WIFI Language/zh_CN ABI/arm64",
-    "Cookie": cookie,
+    "Cookie": "",
 }
 
 
@@ -42,6 +44,7 @@ def home():
     p_value = share_link.split("=")[1].split("&")[0]
     global temp_user
     temp_user = p_value
+    print(f"==================当前账号:{temp_user}==================")
     url = "http://2477726.neavbkz.jweiyshi.r0ffky3twj.cloud/read/info"
     response = requests.get(url, headers=headers, data=get_sign()).json()
     if response["code"] == 0:
@@ -154,7 +157,8 @@ def WxSend(project, status, content,turl):
     result = requests.post(tsurl, json=data).json()
     print(f"微信消息推送: {result['msg']}")
 
-
-home()
-read()
-get_money()
+for cookie in cookie_list:
+    headers["Cookie"]=cookie
+    home()
+    read()
+    get_money()

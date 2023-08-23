@@ -1,9 +1,11 @@
 # Author: lindaye
+# update: 2023-08-23 8:46
 # http://mr1692750884645.aidhtjj.cn/coin/index.html?mid=CR42F6WUF 【元宝阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
 # http://mr1692750916083.dsxanvq.cn/ox/index.html?mid=RG7UUSYFS 【星空阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
 # http://mr1692750963995.stijhqm.cn/user/index.html?mid=D33C7W3A3 【花花阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
 # 使用方法: 打开上面三个链接抓包获取un token值填入18 行 data
-# 关注微信测试号: 
+# 关注微信测试号(不关注无法推送检测文章): https://s1.ax1x.com/2023/08/23/pPJ5bnA.png
+# 替换WxSend函数中的微信昵称
 
 
 import requests

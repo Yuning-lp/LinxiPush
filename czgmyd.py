@@ -1,5 +1,5 @@
 # Author: lindaye
-# update: 2023-08-23 6:40
+# update: 2023-08-23 9:00
 # 充值购买阅读(钢镚阅读)
 # 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
 # 入口: http://2496831.y1bn.0749apd1a845l.cloud/?p=2496831
@@ -73,7 +73,7 @@ def read():
                         print(response)
                     url = "http://2477726.9o.10r8cvn6b1.cloud/read/task"
                     response = requests.get(url, headers=headers, data=get_sign()).json()
-                    if 'link' in response:
+                    if ('data' in response) and ('link' in response['data']):
                         print(f"获取文章成功---{biz}---阅读时间{s}")
                         time.sleep(s)
                         response = requests.post("http://2477726.9o.10r8cvn6b1.cloud/read/finish", headers=headers, data=get_sign()).json()

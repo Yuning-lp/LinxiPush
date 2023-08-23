@@ -66,12 +66,17 @@ def read():
                 tips = {30:'重新运行尝试一下',40:'文章还没有准备好',50:'阅读失效,黑号了',60:'已经全部阅读完了',70:'下一轮还未开启',}
                 print(f'{ydname}账号提醒: {tips[result["result"]["status"]]}!')
                 if result["result"]["status"] ==30:
+                    time.sleep(1)
                     continue
                 else:
                     break
         else:
-            print(f"异常: {result}")
-            break
+            if result['msg'] == "请求频繁":
+                time.sleep(1)
+                continue
+            else:
+                print(f"异常: {result}")
+                break
 
 def get_money(max_money):
     print(f"================{ydname}提现==================")

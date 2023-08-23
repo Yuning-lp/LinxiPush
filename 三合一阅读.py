@@ -37,8 +37,10 @@ def WxSend(project, status, content,turl):
 def user():
     url = domain +'/info'
     result = requests.post(url,headers=headers,json=data).json()['result']
-    print(f"账号: {result['uid']} 今日已读: {result['dayCount']} 今日积分:{result['moneyCurrent']}")
-
+    print(f"{ydname}账号: {result['uid']} 今日已读: {result['dayCount']} 今日积分:{result['moneyCurrent']}")
+    options = [0.3, 0.5, 1, 5]  # 可选的数字列表
+    max_money = max(filter(lambda x: x < (int(result['moneyCurrent'])/10000), options), default=0.3)
+    return max_money
 
 def read():
     while True:
@@ -49,7 +51,7 @@ def read():
                 biz=''.join(re.findall('__biz=(.+)&mid',result["result"]["url"]))
                 if biz in ['Mzg2Mzk3Mjk5NQ==']:
                     print("检测文章: 请在30秒内完成当前文章")
-                    WxSend("微信阅读-花花阅读", "检测文章", "请在30秒内完成当前文章",result["result"]["url"])
+                    WxSend(f"微信阅读-{ydname}", "检测文章", "请在30秒内完成当前文章",result["result"]["url"])
                     time.sleep(30)
                     url = domain +'/submit'
                     result = requests.post(url,headers=headers,json=data).json()
@@ -62,7 +64,7 @@ def read():
                     print(f"阅读成功: 积分{result['val']} 剩余{result['progress']}篇")  
             else:
                 tips = {30:'重新运行尝试一下',40:'文章还没有准备好',50:'阅读失效,黑号了',60:'已经全部阅读完了',70:'下一轮还未开启',}
-                print(f'账号提醒: {tips[result["result"]["status"]]}!')
+                print(f'{ydname}账号提醒: {tips[result["result"]["status"]]}!')
                 if result["result"]["status"] ==30:
                     continue
                 else:
@@ -71,10 +73,23 @@ def read():
             print(f"异常: {result}")
             break
 
+def get_money(max_money):
+    print(f"================{ydname}提现==================")
+    if ydname == "花花":
+        t = "/wd"
+    else:
+        t = "/wdmoney"
+    T_data = {"val":max_money,"un":data['un'],"token":data['token'],"pageSize":20}
+    response = requests.post(domain+t, headers=headers, json=T_data).json()
+    print(response)
+
 for i in ['/user','/coin','/ox']:
     domain = 'http://u.cocozx.cn/api'+i # 花花 /user 元宝阅读 /coin 星空阅读 /ox
-    ydname = {'/user':'花花','/coin':'元宝','/ox':'星空'}
-    print(f"================{ydname[i]}阅读==================")
-    user()
+    ydlist = {'/user':'花花','/coin':'元宝','/ox':'星空'}
+    ydname = ydlist[i]
+    print(f"================{ydname}阅读==================")
+    max_money = user()  # 提现金额
     read()
+    max_money = user()  # 提现金额
+    get_money(max_money)
     time.sleep(1)

@@ -3,7 +3,7 @@
 # 充值购买阅读(钢镚阅读)
 # 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
 # 2.升级推送助手(实时检测阅读回调)
-# 入口: http://2496831.y1bn.0749apd1a845l.cloud/?p=2496831
+# 入口: http://2496831.ikbiwrbnf.bmaw.t7267ekl7p.cloud/?p=2496831
 # V1.2(测试中)
 
 import re

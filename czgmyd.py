@@ -81,6 +81,7 @@ def read():
                         print("检测文章-过检测成功啦!")
                         response = requests.post("http://2477726.9o.10r8cvn6b1.cloud/read/finish", headers=headers, data=get_sign()).json()
                         if response["code"] == 0:
+                            gain = response["data"]["gain"]
                             print(f"阅读文章成功---获得钢镚[{gain}]")
                         else:
                             print(response)

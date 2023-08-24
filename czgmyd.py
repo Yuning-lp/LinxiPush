@@ -1,12 +1,14 @@
 # Author: lindaye
 # update: 2023-08-24 12:51
 # 充值购买阅读(钢镚阅读)
-# 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换微信昵称)
+# 1.新增手动验证文章
 # 2.升级推送助手(实时检测阅读回调)
 # 3.新增多账户
 # 4.修复推送助手
 # 5.优化脚本
 # 入口: http://2496831.ikbiwrbnf.bmaw.t7267ekl7p.cloud/?p=2496831
+# 微信测试号: https://s1.ax1x.com/2023/08/23/pPJ5bnA.png
+# 使用方法: 1.填写cookie_list的值(可以全Cookie也可以"gfsessionid=xxxxx") 2.扫码关注微信测试号 3.修改微信昵称
 # V1.4(最终版)
 
 import re

@@ -139,11 +139,11 @@ def get_money():
 
 
 def test(biz,link):
-    result = ss.post(tsurl+"/task",json={"biz":temp_user+biz,"url":link}).json()
-    WxSend("微信阅读-钢镚阅读", "检测文章", "请在30秒内完成当前文章",tsurl+"/read/"+temp_user+biz)
+    result = ss.post(tsurl+"/task",json={"biz":temp_user,"url":link}).json()
+    WxSend("微信阅读-钢镚阅读", "检测文章", "请在30秒内完成当前文章",tsurl+"/read/"+temp_user)
     check = ''
     for i in range(30):
-        result = ss.get(tsurl+"/back/"+temp_user+biz).json()
+        result = ss.get(tsurl+"/back/"+temp_user).json()
         if result['status'] == True:
             check = True 
             break

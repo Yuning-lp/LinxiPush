@@ -4,8 +4,9 @@
 # 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
 # 2.升级推送助手(实时检测阅读回调)
 # 3.新增多账户
+# 注意: 当前推送已限额无法使用
 # 入口: http://2496831.ikbiwrbnf.bmaw.t7267ekl7p.cloud/?p=2496831
-# V1.3(测试中)
+# V1.3
 
 import re
 import time
@@ -149,7 +150,7 @@ def test(biz,link):
 # 微信推送
 def WxSend(project, status, content,turl):
     data = {
-        "name": "林夕", # 微信昵称
+        "name": "XX", # 微信昵称
         "project": project,
         "status": status,
         "content": content,

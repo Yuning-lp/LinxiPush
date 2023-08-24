@@ -30,6 +30,22 @@ uid_list = ['##','##']
 
 ysm_uid = ''
 
+# 检测文章列表
+check_list = [
+    "MzkxNTE3MzQ4MQ==",
+    "Mzg5MjM0MDEwNw==",
+    "MzUzODY4NzE2OQ==",
+    "MzkyMjE3MzYxMg==",
+    "MzkxNjMwNDIzOA==",
+    "Mzg3NzUxMjc5Mg==",
+    "Mzg4NTcwODE1NA==",
+    "Mzk0ODIxODE4OQ==",
+    "Mzg2NjUyMjI1NA==",
+    "MzIzMDczODg4Mw==",
+    "Mzg5ODUyMzYzMQ==",
+    "MzU0NzI5Mjc4OQ==",
+]
+
 headers = {
     'Cookie': '',
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue'
@@ -103,15 +119,15 @@ def get_Key():
     do_read(uk[0])
 
 def do_read(uk):
-    check_read = 0
     while True:
         result = ss.get(f'https://nsr.zsf2023e458.cloud/yunonline/v1/do_read?uk={uk}').json()
         if result['errcode'] == 0:
             link = result['data']['link']
             l_result = ss.get(link,headers=headers).text
+            biz = re.findall("biz=(.*?)&mid",l_result)[0]
             s = random.randint(6,8)
-            print (f'获取{check_read}文章成功,本次模拟读{s}秒')
-            if check_read == 99:
+            print (f'获取文章成功,本次模拟读{s}秒')
+            if biz in check_list:
                 print("阅读文章检测--100篇检测---已推送至微信")
                 link = re.findall('msg_link = "(.*?)";',l_result)[0]
                 # 过检测
@@ -121,8 +137,8 @@ def do_read(uk):
                     r_result = ss.get(f'https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold?uk={uk}&time={s}&timestamp={ts()}').json()
                     if r_result['errcode'] == 0:
                         print(f"阅读已完成: 获得{r_result['data']['gold']}积分")
-                        check_read = r_result['data']['day_read']
                     else:
+                        print(f"阅读失败,获取到未收录检测BIZ:{biz}")
                         print(r_result)
                         break
                 else:
@@ -133,7 +149,6 @@ def do_read(uk):
                 r_result = ss.get(f'https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold?uk={uk}&time={s}&timestamp={ts()}').json()
                 if r_result['errcode'] == 0:
                     print(f"阅读已完成: 获得{r_result['data']['gold']}积分")
-                    check_read = r_result['data']['day_read']
                 else:
                     print(r_result)
                     break

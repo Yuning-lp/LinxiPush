@@ -131,7 +131,7 @@ def do_read(uk):
                 print("阅读文章检测--100篇检测---已推送至微信")
                 link = re.findall('msg_link = "(.*?)";',l_result)[0]
                 # 过检测
-                check = test("100",link)
+                check = test(link)
                 if check == True:
                     print("检测文章-过检测成功啦!")
                     r_result = ss.get(f'https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold?uk={uk}&time={s}&timestamp={ts()}').json()
@@ -160,12 +160,12 @@ def do_read(uk):
                 break
 
 
-def test(biz,link):
-    result = ss.post(tsurl+"/task",json={"biz":temp_user+biz,"url":link}).json()
-    WxSend("微信阅读-小阅阅读", "检测文章", "请在30秒内完成当前文章",tsurl+"/read/"+temp_user+biz)
+def test(link):
+    result = ss.post(tsurl+"/task",json={"biz":temp_user,"url":link}).json()
+    WxSend("微信阅读-小阅阅读", "检测文章", "请在30秒内完成当前文章",tsurl+"/read/"+temp_user)
     check = ''
     for i in range(30):
-        result = ss.get(tsurl+"/back/"+temp_user+biz).json()
+        result = ss.get(tsurl+"/back/"+temp_user).json()
         if result['status'] == True:
             check = True 
             break

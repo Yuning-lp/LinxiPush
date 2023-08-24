@@ -1,7 +1,7 @@
 # Author: lindaye
 # update: 2023-08-24 12:51
 # 充值购买阅读(钢镚阅读)
-# 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
+# 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换微信昵称)
 # 2.升级推送助手(实时检测阅读回调)
 # 3.新增多账户
 # 4.修复推送助手
@@ -19,14 +19,14 @@ import base64
 
 # 抓包获取Cookie完全填入cookie替换###
 cookie_list = ["##","##"]
+# 微信昵称
+wxname = '林夕'
+
 
 # 推送域名
 tsurl = 'https://linxi-send.run.goorm.app'
 # 临时用户名
 temp_user = ''
-# 微信昵称
-wxname = '林夕'
-
 # 保持连接,重复利用
 ss = requests.session()
 

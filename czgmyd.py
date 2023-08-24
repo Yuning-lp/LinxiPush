@@ -22,7 +22,7 @@ import base64
 # 抓包获取Cookie完全填入cookie替换###
 cookie_list = ["##","##"]
 # 微信昵称
-wxname = '林夕'
+wxname = 'XX'
 
 
 # 推送域名

@@ -1,12 +1,13 @@
 # Author: lindaye
-# update: 2023-08-23 22:57
+# update: 2023-08-24 12:51
 # 充值购买阅读(钢镚阅读)
 # 1.新增手动验证文章(关注微信测试号[https://s1.ax1x.com/2023/08/23/pPJ5bnA.png] 替换Wxsend函数中微信昵称)
 # 2.升级推送助手(实时检测阅读回调)
 # 3.新增多账户
-# 注意: 当前推送已限额无法使用
+# 4.修复推送助手
+# 5.优化脚本
 # 入口: http://2496831.ikbiwrbnf.bmaw.t7267ekl7p.cloud/?p=2496831
-# V1.3
+# V1.4(最终版)
 
 import re
 import time
@@ -15,13 +16,19 @@ import random
 import requests
 import base64
 
+
+# 抓包获取Cookie完全填入cookie替换###
+cookie_list = ["##","##"]
+
 # 推送域名
 tsurl = 'https://linxi-send.run.goorm.app'
 # 临时用户名
 temp_user = ''
+# 微信昵称
+wxname = '林夕'
 
-# 抓包获取Cookie完全填入cookie替换###
-cookie_list = ["##","##"]
+# 保持连接,重复利用
+ss = requests.session()
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Linux; Android 9; V1923A Build/PQ3B.190801.06161913; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Safari/537.36 MMWEBID/5635 MicroMessenger/8.0.40.2420(0x28002837) WeChat/arm64 Weixin Android Tablet NetType/WIFI Language/zh_CN ABI/arm64",
@@ -40,14 +47,13 @@ def get_sign():
 
 def home():
     url = "http://2477726.neavbkz.jweiyshi.r0ffky3twj.cloud/share"
-    response = requests.get(url, headers=headers, data=get_sign()).json()
+    response = ss.get(url, headers=headers, data=get_sign()).json()
     share_link = response["data"]["share_link"][0]
     p_value = share_link.split("=")[1].split("&")[0]
     global temp_user
     temp_user = p_value
-    print(f"==================当前账号:{temp_user}==================")
     url = "http://2477726.neavbkz.jweiyshi.r0ffky3twj.cloud/read/info"
-    response = requests.get(url, headers=headers, data=get_sign()).json()
+    response = ss.get(url, headers=headers, data=get_sign()).json()
     if response["code"] == 0:
         remain = response["data"]["remain"]
         read = response["data"]["read"]
@@ -57,11 +63,12 @@ def home():
 
 
 def read():
-    for i in range(30):
+    while True:
         url = "http://2477726.9o.10r8cvn6b1.cloud/read/task"
-        response = requests.get(url, headers=headers, data=get_sign()).json()
+        response = ss.get(url, headers=headers, data=get_sign()).json()
         if response["code"] == 1:
             if "秒" in response['message']:
+                print(response["message"])
                 s = re.findall('请(.*?)秒',response['message'])[0]
                 time.sleep(int(s))
             else:
@@ -80,7 +87,7 @@ def read():
                     check = test(biz,response["data"]["link"])
                     if check == True:
                         print("检测文章-过检测成功啦!")
-                        response = requests.post("http://2477726.9o.10r8cvn6b1.cloud/read/finish", headers=headers, data=get_sign()).json()
+                        response = ss.post("http://2477726.9o.10r8cvn6b1.cloud/read/finish", headers=headers, data=get_sign()).json()
                         if response["code"] == 0:
                             gain = response["data"]["gain"]
                             print(f"阅读文章成功---获得钢镚[{gain}]")
@@ -92,8 +99,7 @@ def read():
                 else:
                     time.sleep(s)
                     url = "http://2477726.9o.10r8cvn6b1.cloud/read/finish"
-                    response = requests.post(url, headers=headers, data=get_sign()).json()
-                    print(response)
+                    response = ss.post(url, headers=headers, data=get_sign()).json()
                     if response["code"] == 0:
                         if response["data"]["check"] is False:
                             gain = response["data"]["gain"]
@@ -121,7 +127,7 @@ def read():
 def get_money():
     print("============开始微信提现============")
     url = "http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
-    response = requests.get(url, headers=headers, data=get_sign()).json()
+    response = ss.get(url, headers=headers, data=get_sign()).json()
     if response["code"] == 0:
         print(response["message"])
     elif response["code"] == 1:
@@ -131,18 +137,19 @@ def get_money():
 
 
 def test(biz,link):
-    result = requests.post(tsurl+"/task",json={"biz":temp_user+biz,"url":link}).json()
+    result = ss.post(tsurl+"/task",json={"biz":temp_user+biz,"url":link}).json()
     WxSend("微信阅读-钢镚阅读", "检测文章", "请在30秒内完成当前文章",tsurl+"/read/"+temp_user+biz)
     check = ''
     for i in range(30):
-        result = requests.get(tsurl+"/back/"+temp_user+biz).json()
+        result = ss.get(tsurl+"/back/"+temp_user+biz).json()
         if result['status'] == True:
             check = True 
             break
         else:
-            print("等待检测中...")
+            print("等待检测中...", end="\r", flush=True)
         time.sleep(1)
     if result['status'] == False:
+        print("手动检测超时,验证失败!")
         check = False 
     return check
 
@@ -150,13 +157,13 @@ def test(biz,link):
 # 微信推送
 def WxSend(project, status, content,turl):
     data = {
-        "name": "XX", # 微信昵称
+        "name": wxname, # 微信昵称
         "project": project,
         "status": status,
         "content": content,
         "url":turl
     }
-    result = requests.post(tsurl, json=data).json()
+    result = ss.post(tsurl, json=data).json()
     print(f"微信消息推送: {result['msg']}")
 
 for cookie in cookie_list:
